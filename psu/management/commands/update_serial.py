@@ -12,7 +12,6 @@ class Command(BaseCommand):
             try:
                 for psu in PSU_serial.objects.all():
                     try:
-                        self.stdout.write(self.style.SUCCESS(f'Updating {psu.name}'))
                         ser = serial.Serial(psu.serial, 115200, timeout=1)
                         first_line = ser.readline()
                         if first_line == b'':
@@ -48,6 +47,7 @@ class Command(BaseCommand):
                         psu.fan_speed = -1
                         psu.last_updated = timezone.now()
                         psu.save()
+                        self.stdout.write(self.style.ERROR(f'Error in serial communication with {psu.name}'))
                     sleep(1)
             except KeyboardInterrupt:
                 break
