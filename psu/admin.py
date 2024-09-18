@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import PSU_serial, PSU_random
+from .models import PSU_serial
 
 admin.site.register(PSU_serial)
-admin.site.register(PSU_random)
