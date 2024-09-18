@@ -64,16 +64,6 @@ class PSU_serial(PSU_base):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.currentIN = "Error"
-        self.voltageIN = "Error"
-        self.powerIN = "Error"
-        self.currentOUT = "Error"
-        self.voltageOUT = "Error"
-        self.powerOUT = "Error"
-        self.temperature1 = "Error"
-        self.temperature2 = "Error"
-        self.temperature3 = "Error"
-        self.fan_speed = "Error"
         self.update_data()
 
 
@@ -82,9 +72,12 @@ class PSU_serial(PSU_base):
 
     def update_data(self):
         try:
-            ser = serial.Serial(self.serial, 115200, timeout=0.1)
-            while ser.readline() != b'Begin transmission\r\n':
-                pass
+            ser = serial.Serial(self.serial, 115200, timeout=1)
+            first_line = ser.readline()
+            if first_line == b'':
+                raise serial.SerialException
+            while first_line != b'Begin transmission\r\n':
+                first_line = ser.readline()
             self.currentIN = float(ser.readline())
             self.voltageIN = float(ser.readline())
             self.powerIN = float(ser.readline())
@@ -95,11 +88,21 @@ class PSU_serial(PSU_base):
             self.temperature1 = float(ser.readline())
             self.temperature2 = float(ser.readline())
             self.temperature3 = float(ser.readline())
-            if ser.readline() != "End transmission\n":
-                print("Error in transmission")
+            if ser.readline() != b'End transmission\r\n':
+                raise serial.SerialException
             ser.close()
+
         except serial.SerialException:
-            print("Error opening serial port")
+            self.currentIN = "Error"
+            self.voltageIN = "Error"
+            self.powerIN = "Error"
+            self.currentOUT = "Error"
+            self.voltageOUT = "Error"
+            self.powerOUT = "Error"
+            self.temperature1 = "Error"
+            self.temperature2 = "Error"
+            self.temperature3 = "Error"
+            self.fan_speed = "Error"
 
 
     def get_voltageIN(self):
@@ -136,16 +139,6 @@ class PSU_serial(PSU_base):
 class PSU_random(PSU_base):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.currentIN = 0.0
-        self.voltageIN = 0.0
-        self.powerIN = 0.0
-        self.currentOUT = 0.0
-        self.voltageOUT = 0.0
-        self.powerOUT = 0.0
-        self.temperature1 = 0.0
-        self.temperature2 = 0.0
-        self.temperature3 = 0.0
-        self.fan_speed = 0.0
         self.update_data()
 
 

@@ -1,4 +1,4 @@
 django
-serial
+pyserial
 django-polymorphic
 setuptools
