@@ -9,6 +9,7 @@
     <ul>
     {% for psu in psu_list %}
         <h2>{{ psu }}</h2>
+        <li>Last update: {{ psu.last_updated }}</li>
         <li>Voltage IN: {{ psu.get_voltageIN }}</li>
         <li>Current IN: {{ psu.get_currentIN }}</li>
         <li>Power IN: {{ psu.get_powerIN }}</li>
