@@ -1,0 +1,4 @@
+django
+serial
+django-polymorphic
+setuptools
