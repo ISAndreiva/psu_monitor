@@ -28,7 +28,6 @@ class Command(BaseCommand):
                         psu.temperature1 = float(ser.readline())
                         psu.temperature2 = float(ser.readline())
                         psu.temperature3 = float(ser.readline())
-                        psu.last_updated = timezone.now()
                         if ser.readline() != b'End transmission\r\n':
                             raise serial.SerialException
                         ser.close()
@@ -45,7 +44,6 @@ class Command(BaseCommand):
                         psu.temperature2 = -1
                         psu.temperature3 = -1
                         psu.fan_speed = -1
-                        psu.last_updated = timezone.now()
                         psu.save()
                         self.stdout.write(self.style.ERROR(f'Error in serial communication with {psu.name}'))
                     sleep(1)
