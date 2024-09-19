@@ -93,6 +93,9 @@ class PSU_serial(PSU_base):
     def get_powerOUT(self):
         return self.powerOUT
 
+    def get_efficiency(self):
+        return (self.powerOUT / self.powerIN) * 100
+
     def get_temperature1(self):
         return self.temperature1
 
