@@ -13,10 +13,6 @@ class PSU_base(PolymorphicModel):
         return self.name
 
     
-    def update_data(self):
-        pass
-
-    
     def get_voltageIN(self):
         pass
 
