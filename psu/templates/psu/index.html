@@ -1,15 +1,16 @@
 <html lang="en">
+{% load static %}
+<link rel="stylesheet" href="{% static 'psu/style.css' %}">
 <head>
     <title>PSU Monitor</title>
 </head>
-
 <body>
-    <h1>PSU Monitor</h1>
+    <img src="{% static 'psu/images/logo.png' %}" alt="Logo" style="width: 200px; height: 155px;" class="center">
     {% if psu_list %}
-    <ul>
+    <main id="psus">
     {% for psu in psu_list %}
-        <h2>{{ psu }}</h2>
         <div id="psu-{{ psu.pk }}">
+            <h2>{{ psu }}</h2>
             <p>Voltage IN: <span id="voltageIN-{{ psu.pk }}"></span></p>
             <p>Current IN: <span id="currentIN-{{ psu.pk }}"></span></p>
             <p>Power IN: <span id="powerIN-{{ psu.pk }}"></span></p>
@@ -65,7 +66,7 @@
 
         </script>
         {% endfor %}
-    </ul>
+    </main>
     {% else %}
     <p>No PSU are available.</p>
     {% endif %}

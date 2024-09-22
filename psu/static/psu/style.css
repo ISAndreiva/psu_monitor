@@ -1,0 +1,34 @@
+h1 {
+    text-align:center;
+    color: darkorange;
+}
+
+body{
+    background-color: #313338;
+    color: white;
+}
+
+main{
+    align-items: center;
+    align-self: center;
+    display: grid;
+    border: hidden;
+    grid-template-columns: repeat(2, 50%);
+    padding: 1% 3% 3%;
+}
+
+div{
+    width: 90%;
+    border: 7px double orange;
+    padding: 5px;
+    margin: 5px;
+    background-color: #212226;
+    border-radius: 10px;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}

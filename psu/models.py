@@ -72,9 +72,6 @@ class PSU_serial(PSU_base):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def __str__(self):
-        return str(self.name) + " (" + str(self.serial) + ")"
-
     def get_voltageIN(self):
         return self.voltageIN
 
