@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
 <head>
     <title>PSU Monitor</title>
 </head>
@@ -9,21 +9,65 @@
     <ul>
     {% for psu in psu_list %}
         <h2>{{ psu }}</h2>
-        <li>Last update: {{ psu.last_updated }}</li>
-        <li>Voltage IN: {{ psu.get_voltageIN }}</li>
-        <li>Current IN: {{ psu.get_currentIN }}</li>
-        <li>Power IN: {{ psu.get_powerIN }}</li>
-        <li>Voltage OUT: {{ psu.get_voltageOUT }}</li>
-        <li>Current OUT: {{ psu.get_currentOUT }}</li>
-        <li>Power OUT: {{ psu.get_powerOUT }}</li>
-        <li>Temperature: {{ psu.get_temperature1 }} {{ psu.get_temperature2 }} {{ psu.get_temperature3 }}</li>
-        <li>Fan RPM: {{ psu.get_fan_speed }}</li>
-    {% endfor %}
+        <div id="psu-{{ psu.pk }}">
+            <p>Voltage IN: <span id="voltageIN-{{ psu.pk }}"></span></p>
+            <p>Current IN: <span id="currentIN-{{ psu.pk }}"></span></p>
+            <p>Power IN: <span id="powerIN-{{ psu.pk }}"></span></p>
+            <p>Voltage OUT: <span id="voltageOUT-{{ psu.pk }}"></span></p>
+            <p>Current OUT: <span id="currentOUT-{{ psu.pk }}"></span></p>
+            <p>Power OUT: <span id="powerOUT-{{ psu.pk }}"></span></p>
+            <p>Efficiency: <span id="efficiency-{{ psu.pk }}"></span></p>
+            <p>Temperature 1: <span id="temperature1-{{ psu.pk }}"></span></p>
+            <p>Temperature 2: <span id="temperature2-{{ psu.pk }}"></span></p>
+            <p>Temperature 3: <span id="temperature3-{{ psu.pk }}"></span></p>
+            <p>Fan Speed: <span id="fan_speed-{{ psu.pk }}"></span></p>
+        </div>
+        <script>
+            function updatePSUData(psuId) {
+                fetch(`/get_psu/${psuId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        var date = new Date(0);
+                        date.setUTCSeconds(data.last_updated);
+                        if (date.getTime() > Date.now() - 10000) {
+                            document.getElementById(`voltageIN-${psuId}`).innerText = data.voltageIN;
+                            document.getElementById(`currentIN-${psuId}`).innerText = data.currentIN;
+                            document.getElementById(`powerIN-${psuId}`).innerText = data.powerIN;
+                            document.getElementById(`voltageOUT-${psuId}`).innerText = data.voltageOUT;
+                            document.getElementById(`currentOUT-${psuId}`).innerText = data.currentOUT;
+                            document.getElementById(`powerOUT-${psuId}`).innerText = data.powerOUT;
+                            document.getElementById(`efficiency-${psuId}`).innerText = data.efficiency;
+                            document.getElementById(`temperature1-${psuId}`).innerText = data.temperature1;
+                            document.getElementById(`temperature2-${psuId}`).innerText = data.temperature2;
+                            document.getElementById(`temperature3-${psuId}`).innerText = data.temperature3;
+                            document.getElementById(`fan_speed-${psuId}`).innerText = data.fan_speed;
+                        } else {
+                            document.getElementById(`voltageIN-${psuId}`).innerText = "Loading...";
+                            document.getElementById(`currentIN-${psuId}`).innerText = "Loading...";
+                            document.getElementById(`powerIN-${psuId}`).innerText = "Loading...";
+                            document.getElementById(`voltageOUT-${psuId}`).innerText = "Loading...";
+                            document.getElementById(`currentOUT-${psuId}`).innerText = "Loading...";
+                            document.getElementById(`powerOUT-${psuId}`).innerText = "Loading...";
+                            document.getElementById(`efficiency-${psuId}`).innerText = "Loading...";
+                            document.getElementById(`temperature1-${psuId}`).innerText = "Loading...";
+                            document.getElementById(`temperature2-${psuId}`).innerText = "Loading...";
+                            document.getElementById(`temperature3-${psuId}`).innerText = "Loading...";
+                            document.getElementById(`fan_speed-${psuId}`).innerText = "Loading...";
+                        }
+
+                    });
+            }
+
+            updatePSUData('{{ psu.pk }}');
+            setInterval(() => {
+                    updatePSUData('{{ psu.pk }}');
+            }, 1000);
+
+        </script>
+        {% endfor %}
     </ul>
-{% else %}
+    {% else %}
     <p>No PSU are available.</p>
-{% endif %}
-
+    {% endif %}
 </body>
-
 </html>
