@@ -34,17 +34,6 @@ class Command(BaseCommand):
                         psu.save()
 
                     except serial.SerialException:
-                        psu.currentIN = -1
-                        psu.voltageIN = -1
-                        psu.powerIN = -1
-                        psu.currentOUT = -1
-                        psu.voltageOUT = -1
-                        psu.powerOUT = -1
-                        psu.temperature1 = -1
-                        psu.temperature2 = -1
-                        psu.temperature3 = -1
-                        psu.fan_speed = -1
-                        psu.save()
                         self.stdout.write(self.style.ERROR(f'Error in serial communication with {psu.name}'))
                     sleep(1)
             except KeyboardInterrupt:
