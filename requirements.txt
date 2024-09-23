@@ -2,3 +2,4 @@ django
 pyserial
 django-polymorphic
 setuptools
+gunicorn
