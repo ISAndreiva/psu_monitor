@@ -1,0 +1,22 @@
+server_tokens               off;
+access_log                  /var/log/nginx/psu_monitor.access.log;
+error_log                   /var/log/nginx/psu_monitor.error.log;
+
+server {
+  server_name               localhost;
+  listen                    80;
+  location / {
+    proxy_pass              http://localhost:8080;
+    proxy_set_header        Host $host;
+  }
+  error_page   500 502 503 504  /50x.html;
+       location = /50x.html {
+           root   /usr/share/nginx/html;
+       }
+  location /static {
+    autoindex on;
+    alias /home/andreiva/Misc/psu_website/psu_monitor/static/;
+  }
+
+
+}
