@@ -4,4 +4,8 @@ A personal and basic project consisting of:
 
 The point of this project was to give me a way to display the data the PSU was outputing via PMBUS and it was done in ~1 week.
 
-The code for implementing PMBUS on Arduino or related devices is from [here](https://github.com/sxjack/dps750tb_psu_i2c)
+Here is how it looks deployed in my homelab:
+![](doc/psu-monitor-deployed.png)
+
+Credits:<br>
+The code for implementing PMBUS on Arduino or related devices: https://github.com/sxjack/dps750tb_psu_i2c
