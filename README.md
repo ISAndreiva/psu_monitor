@@ -1,4 +1,4 @@
-A personal and basic project consisting of: 
+A basic project consisting of: 
 - website made using Django to show power supply information
 - 2 esp8266s comunicating between each other using ESPNOW, one is connected to the website host and the other to a PSU using PMBUS
 
